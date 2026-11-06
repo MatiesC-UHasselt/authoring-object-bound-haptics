@@ -1,7 +1,11 @@
 # Authoring Object-Bound Haptics
 
-Lokale Git-repository van de papersite voor MUM 2026, klaar voor GitHub Pages.
+Papersite voor MUM 2026, met een lokale Git-repository en automatische publicatie via GitHub Pages.
 De vier bestaande Sites-versies zijn bewaard in de Git-geschiedenis.
+
+- Repository: <https://github.com/MatiesC-UHasselt/authoring-object-bound-haptics>
+- GitHub Pages-adres: <https://matiesc-uhasselt.github.io/authoring-object-bound-haptics/>
+- Beoogd eigen domein: `matiesclaesen.be` (registratie en DNS-koppeling nog af te werken).
 
 ## Bestanden aanpassen
 
@@ -23,20 +27,17 @@ python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 
 Open daarna <http://localhost:8000>. Stop de lokale server met Ctrl+C.
 
-## Eenmalig op GitHub zetten
+## GitHub-koppeling
 
-Er is nog geen GitHub-remote ingesteld of online repository aangemaakt.
+De openbare repository is aangemaakt onder **MatiesC-UHasselt**. De lokale `main`-branch volgt `origin/main` en de bestaande versiegeschiedenis is geüpload.
 
-1. Voeg deze bestaande lokale repository toe in GitHub Desktop via **File → Add Local Repository**.
-2. Kies **Publish repository**. Een openbare repository kan GitHub Pages gebruiken met GitHub Free.
-3. Open de repository op GitHub: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-4. Start onder **Actions → Publish website → Run workflow** de eerste publicatie. Latere pushes naar `main` publiceren automatisch.
+In **Settings → Pages** staat de publicatiebron op **GitHub Actions**. Een push naar `main` start automatisch de workflow **Publish website**. Onder **Actions** kun je de status bekijken en de workflow eventueel handmatig starten.
 
-Je kunt ook een lege GitHub-repository maken zonder README of andere bestanden en de aangegeven bestaande-repository-instructies volgen.
+Wil je GitHub Desktop gebruiken, voeg deze bestaande map toe via **File → Add Local Repository**. De remote is al ingesteld; maak geen tweede online repository aan.
 
 ## Domein en HTTPS koppelen
 
-Deze lokale voorbereiding koopt of configureert geen domein. Zodra `matiesclaesen.be` geregistreerd is en de site op GitHub Pages staat:
+Zodra `matiesclaesen.be` geregistreerd is:
 
 1. Verifieer het domein bij GitHub via **Settings → Pages** van je account en voeg het gevraagde TXT-record toe bij OVH.
 2. Stel in **Settings → Pages** van de repository **Custom domain** in op `matiesclaesen.be`. Bij een Actions-publicatie moet dit expliciet in de instellingen; het CNAME-bestand alleen volstaat niet.
@@ -48,18 +49,26 @@ Deze lokale voorbereiding koopt of configureert geen domein. Zodra `matiesclaese
    | A | @ | 185.199.109.153 |
    | A | @ | 185.199.110.153 |
    | A | @ | 185.199.111.153 |
-   | CNAME | www | de GitHub-gebruikersnaam gevolgd door `.github.io` |
+   | CNAME | www | matiesc-uhasselt.github.io |
 
-   Gebruik voor het CNAME-record de eigenaar van de uiteindelijke GitHub-repository. Vervang conflicterende website-records; laat geen oude A- of AAAA-records naar OVH staan voor dezelfde naam.
+   Vervang conflicterende website-records; laat geen oude A- of AAAA-records naar OVH staan voor dezelfde naam.
 4. Wacht op een geslaagde DNS-controle en het certificaat; schakel daarna **Enforce HTTPS** in.
 
-De absolute metadata in `dist/index.html` is voorbereid voor `https://matiesclaesen.be`.
-Gebruik je later een ander adres, pas dan ook `og:image`, `citation_pdf_url` en `dist/CNAME` aan.
+De absolute metadata in `dist/index.html` gebruikt voorlopig het werkende GitHub Pages-adres.
+Pas na het koppelen van het domein `og:image` en `citation_pdf_url` aan naar `https://matiesclaesen.be/assets/…`. `dist/CNAME` bevat al het beoogde domein.
 
 ## Updates publiceren
 
 Pas de bestanden aan, maak een commit en kies **Push origin** in GitHub Desktop.
 GitHub Actions publiceert daarna de nieuwe versie. Bewerkingen in Sites worden niet automatisch overgenomen.
+
+Vanuit een terminal in deze map kan hetzelfde met:
+
+```sh
+git add dist
+git commit -m "Update website"
+git push
+```
 
 ## Documentatie
 
