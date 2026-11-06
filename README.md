@@ -4,15 +4,16 @@ Papersite voor MUM 2026, met een lokale Git-repository en automatische publicati
 De vier bestaande Sites-versies zijn bewaard in de Git-geschiedenis.
 
 - Repository: <https://github.com/MatiesC-UHasselt/authoring-object-bound-haptics>
-- GitHub Pages-adres: <https://matiesc-uhasselt.github.io/authoring-object-bound-haptics/>
-- Beoogd eigen domein: `matiesclaesen.be` (registratie en DNS-koppeling nog af te werken).
+- Eigen domein: <https://matiesclaesen.be/>
+- Alternatief adres: <https://www.matiesclaesen.be/> (verwijst door naar het hoofddomein zodra DNS en het certificaat actief zijn).
+- Oorspronkelijk GitHub Pages-adres: <https://matiesc-uhasselt.github.io/authoring-object-bound-haptics/> (GitHub verwijst dit door naar het eigen domein).
 
 ## Bestanden aanpassen
 
 - `dist/index.html`: de pagina, opmaak en interacties. Dit is het bewerkbare bronbestand; er is geen bouwstap.
 - `dist/assets/`: afbeeldingen, lettertypen, het paper en de BibTeX-citatie.
 - `.github/workflows/pages.yml`: publiceert `dist/` na een push naar `main`.
-- `dist/CNAME`: het beoogde domein, `matiesclaesen.be`.
+- `dist/CNAME`: het eigen domein, `matiesclaesen.be`.
 
 Er zijn geen npm-pakketten, database, API-sleutels of aparte server nodig.
 De `.openai/hosting.json` is meegekomen met de export van Sites; de GitHub Pages-workflow gebruikt die niet.
@@ -35,27 +36,26 @@ In **Settings → Pages** staat de publicatiebron op **GitHub Actions**. Een pus
 
 Wil je GitHub Desktop gebruiken, voeg deze bestaande map toe via **File → Add Local Repository**. De remote is al ingesteld; maak geen tweede online repository aan.
 
-## Domein en HTTPS koppelen
+## Domein en HTTPS
 
-Zodra `matiesclaesen.be` geregistreerd is:
+Het domein is gekocht bij OVH. In **Settings → Pages** van de repository staat **Custom domain** op `matiesclaesen.be`. De volgende DNS-records zijn bij OVH ingesteld:
 
-1. Verifieer het domein bij GitHub via **Settings → Pages** van je account en voeg het gevraagde TXT-record toe bij OVH.
-2. Stel in **Settings → Pages** van de repository **Custom domain** in op `matiesclaesen.be`. Bij een Actions-publicatie moet dit expliciet in de instellingen; het CNAME-bestand alleen volstaat niet.
-3. Stel bij OVH de volgende records voor de website in. Bewaar records voor e-mail en domeinverificatie.
+| Type | Naam | Waarde |
+| --- | --- | --- |
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | matiesc-uhasselt.github.io. |
+| TXT | _github-pages-challenge-MatiesC-UHasselt | 7302787a0ec1e2be0042270701187b |
 
-   | Type | Naam | Waarde |
-   | --- | --- | --- |
-   | A | @ | 185.199.108.153 |
-   | A | @ | 185.199.109.153 |
-   | A | @ | 185.199.110.153 |
-   | A | @ | 185.199.111.153 |
-   | CNAME | www | matiesc-uhasselt.github.io |
+De bestaande NS-, MX- en e-mail-SPF-records zijn behouden. De OVH-welkomstpagina en bijbehorende webverwijzingen zijn vervangen door de verwijzingen naar GitHub. De website-records hebben een TTL van 300 seconden.
 
-   Vervang conflicterende website-records; laat geen oude A- of AAAA-records naar OVH staan voor dezelfde naam.
-4. Wacht op een geslaagde DNS-controle en het certificaat; schakel daarna **Enforce HTTPS** in.
+De nameservers zijn `dns103.ovh.net` en `ns103.ovh.net`. Bij een nieuwe registratie kan de activering en verspreiding van DNS nog tijd kosten. GitHub vraagt het certificaat aan zodra de DNS-controle slaagt. Controleer **Enforce HTTPS** in de Pages-instellingen zodra het certificaat beschikbaar is.
 
-De absolute metadata in `dist/index.html` gebruikt voorlopig het werkende GitHub Pages-adres.
-Pas na het koppelen van het domein `og:image` en `citation_pdf_url` aan naar `https://matiesclaesen.be/assets/…`. `dist/CNAME` bevat al het beoogde domein.
+Verifieer het domein ook onder [je GitHub-accountinstellingen](https://github.com/settings/pages_verified_domains/matiesclaesen.be) zodra het TXT-record publiek zichtbaar is. Laat het verificatierecord daarna staan.
+
+De absolute metadata voor het paper en de deelafbeelding gebruikt `https://matiesclaesen.be`. Als je ooit verhuist, pas dan ook `og:image`, `citation_pdf_url`, `dist/CNAME` en de GitHub Pages-instellingen aan.
 
 ## Updates publiceren
 
